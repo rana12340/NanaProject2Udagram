@@ -1,0 +1,11 @@
+[
+    {
+      "ParameterKey": "Environment",
+      "ParameterValue": "Udacity-DevOps-Project2-Network-Infrastructure"
+    },
+    {
+      "ParameterKey": "Project",
+      "ParameterValue": "Udacity-DevOps-Website"
+    }
+  ]
+  
