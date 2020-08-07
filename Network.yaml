@@ -68,13 +68,6 @@ Resources:
       InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
 
-# A VPC spans all of the Availability Zones in the Region. After creating a VPC,
-# you can add one or more subnets in each Availability Zone
-
-# When you create a subnet, you specify the CIDR block for the subnet, which is a subset
-# of the VPC CIDR block. Each subnet must reside entirely within one Availability Zone
-# and cannot span zones
-
 # ------------ Availability Zone 1 -------------------
 # ----------------------------------------------------
 
@@ -114,13 +107,6 @@ Resources:
     Properties:
         Domain: vpc
 
-  # Enables instances in a private subnet to connect to the internet or other AWS services,
-  # but prevent the internet from initiating connections with the instances. A NAT device forwards
-  # traffic from the instances in the private subnet to the internet or other AWS services,
-  # and then sends the response back to the instances. When traffic goes to the internet, the source
-  # IPv4 address is replaced with the NAT device’s address and similarly, when the response traffic
-  # goes to those instances, the NAT device translates the address back to those instances’ private
-  # IPv4 addresses
   NatGateway1:
     Type: AWS::EC2::NatGateway
     Properties:
@@ -184,10 +170,6 @@ Resources:
 
 # ---------- Routing for public routes ---------
 # ----------------------------------------------------
-
-  # Public Route Table
-  # A route table contains a set of rules, called routes, that are used to determine
-  # where network traffic from your subnet or gateway is directed
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -206,10 +188,6 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
 
-  # Associates a subnet with a route table. The subnet and route table must be in the same VPC.
-  # This association causes traffic originating from the subnet to be routed according to the
-  # routes in the route table. A route table can be associated with multiple subnets.
-  # Public Subnet 1 to the Route Table
   PublicSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
@@ -283,11 +261,6 @@ Resources:
 
 # ------------- Security Groups ------------
 # ------------------------------------------
-
-# Security group defines rules that reflect the role of the instance that's associated
-# with the security group. For example, an instance that's configured as a web server
-# needs security group rules that allow inbound HTTP and HTTPS access
-
   # Load Balancer Security Group
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup

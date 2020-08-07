@@ -1,13 +1,12 @@
-AWSTemplateFormatVersion: 2010-09-09
 Description: Udacity DevOps engineer nanodegree project 2 ( Highly scalable website).
-
   Services infrastructure
-
-  Create a Launch Configuration in order to deploy four servers, two located in each of
-  your private subnets. The launch configuration will be used by an auto-scaling group.
-  You'll need two vCPUs and at least 4GB of RAM. The Operating System to be used is
-  Ubuntu 18. So, choose an Instance size and Machine Image (AMI) that best fits this spec
-  Be sure to allocate at least 10GB of disk space so that you don't run into issues.
+  You'll need to create a Launch Configuration for your application servers in order to deploy four servers,
+  two located in each of your private subnets. 
+  The launch configuration will be used by an auto-scaling group.
+  You'll need two vCPUs and at least 4GB of RAM. 
+  The Operating System to be used is Ubuntu 18. 
+  So, choose an Instance size and Machine Image (AMI) that best fits this spec. 
+  Be sure to allocate at least 10GB of disk space so that you don't run into issues
 
 Parameters:
   Environment:
@@ -21,7 +20,7 @@ Parameters:
   WebServerImageId:
     Description: Web serve image id
     Type: String
-    Default: ami-00a54827eb7ffcd3c # Ubuntu Server 18.04 LTS
+    Default: ami-003634241a8fcdec0 # Ubuntu Server 18.04 LTS
 
   WebServerVolumeSize:
     Description: Web server disk volume size
@@ -108,12 +107,9 @@ Resources:
   # configuration that can be used by an Auto Scaling group to configure Amazon EC2
   # instances.
 
-
   # ----------------- EC2 ------------------
   #-----------------------------------------
 
-  # The LaunchConfiguration resource specifies the Amazon EC2 Auto Scaling launch configuration
-  # that can be used by an Auto Scaling group to configure Amazon EC2 instances
   WebAppServer:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
@@ -220,27 +216,8 @@ Resources:
       ListenerArn: !Ref LoadBalancerListener
       Priority: 1
 
-
 #---------------- Scaling Policies ---------------
 #-------------------------------------------------
-
-# When you configure dynamic scaling, you define how to scale the capacity of your
-# Auto Scaling group in response to changing demand. For example, let's say that you
-# have a web application that currently runs on two instances, and you want the CPU
-# utilization of the Auto Scaling group to stay at around 50 percent when the load
-# on the application changes. This gives you extra capacity to handle traffic spikes
-# without maintaining an excessive number of idle resources. You can configure your
-# Auto Scaling group to scale dynamically to meet this need by creating a scaling policy.
-# Amazon EC2 Auto Scaling can then scale out your group (add more instances) to deal
-# with high demand at peak times, and scale in your group (run fewer instances) to reduce
-# costs during periods of low utilization
-
-  # Specifies an Amazon EC2 Auto Scaling scaling policy so that the Auto Scaling group
-  # can change the number of instances available for your application in response to
-  # changing demand. If you create either a step scaling policy or a simple scaling policy,
-  # you must also create a CloudWatch alarm that monitors a CloudWatch metric for your
-  # Auto Scaling group. Note that you can associate a CloudWatch alarm with only one
-  # scaling policy
   WebServerCPUPolicy:
     Type: AWS::AutoScaling::ScalingPolicy
     Properties:
@@ -267,10 +244,11 @@ Resources:
 
 # -------------Output ------------
 # --------------------------------
-
+##-------------------------------------
+##Bonus points if you add http:// in front of the load balancer DNS Name in the output, for convenience.
+##-------------------------------------
 
 Outputs:
-
   DNS:
     Description: The website URL
     Value:
